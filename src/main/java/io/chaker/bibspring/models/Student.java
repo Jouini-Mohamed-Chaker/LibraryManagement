@@ -10,54 +10,49 @@ public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String name;
+    private String email;
     private Boolean activeSubscription;
-    private  String email;
 
-    public Student(String name, Boolean activeSubscription, String email, Long id) {
-        this.name = name;
-        this.activeSubscription = activeSubscription;
-        this.email = email;
+    public Student(Long id, String name, String email, Boolean activeSubscription) {
         this.id = id;
+        this.name = name;
+        this.email = email;
+        this.activeSubscription = activeSubscription;
     }
 
     public Student() {}
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Boolean getActiveSubscription() {
-        return activeSubscription;
-    }
-
-    public void setActiveSubscription(Boolean activeSubscription) {
-        this.activeSubscription = activeSubscription;
+    public Long getId() {
+        return id;
     }
 
     public String getName() {
         return name;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public Boolean getActiveSubscription() {
+        return activeSubscription;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
 
-    public Long getId() {
-        return id;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        Student student = (Student) obj;
-        return name.equals(student.name) && activeSubscription.equals(student.activeSubscription) && email.equals(student.email) && id.equals(student.id);
+    public void setActiveSubscription(Boolean activeSubscription) {
+        this.activeSubscription = activeSubscription;
     }
 
     @Override
@@ -65,9 +60,17 @@ public class Student {
         return "Student{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", activeSubscription=" + activeSubscription +
                 ", email='" + email + '\'' +
+                ", activeSubscription=" + activeSubscription +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Student student = (Student) o;
+        return id.equals(student.id) && name.equals(student.name) && email.equals(student.email) && activeSubscription.equals(student.activeSubscription);
     }
     
 }
