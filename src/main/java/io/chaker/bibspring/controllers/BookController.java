@@ -27,8 +27,8 @@ public class BookController {
     }
 
     @PostMapping("/api/books")
-    public Book addBook(Book book) {
-        return repository.save(book);
+    public List<Book> addBooks(@RequestBody List<Book> books) {
+        return repository.saveAll(books);
     }
 
     @PutMapping("/api/books/{isbn}")
