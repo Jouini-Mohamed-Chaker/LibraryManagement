@@ -2,6 +2,7 @@ package io.chaker.bibspring.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import org.springframework.data.annotation.Id;
 
 @Entity
@@ -10,7 +11,7 @@ public class Book {
     private String author;
     private Integer year;
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @jakarta.persistence.Id
     private Long isbn;
 
