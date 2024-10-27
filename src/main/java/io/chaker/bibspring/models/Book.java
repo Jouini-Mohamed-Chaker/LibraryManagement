@@ -1,22 +1,28 @@
 package io.chaker.bibspring.models;
 
-import jakarta.validation.constraints.NotNull;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import org.springframework.data.annotation.Id;
 
+@Entity
 public class Book {
     private String title;
     private String author;
-
-    @Id private String isbn;
-
     private Integer year;
+    @Id
+    @GeneratedValue
+    @jakarta.persistence.Id
+    private Long isbn;
 
-    public Book(String title, String author, String isbn, Integer year) {
+
+    public Book(String title, String author, Long isbn, Integer year) {
         this.title = title;
         this.author = author;
-        this.isbn = isbn;
         this.year = year;
+        this.isbn = isbn;
     }
+
+    public Book() {}
 
     public String getTitle() {
         return title;
@@ -26,12 +32,25 @@ public class Book {
         return author;
     }
 
-    public String getIsbn() {
+    public void setId(Long isbn) {
+        this.isbn = isbn;
+    }
+
+    public Long getId() {
         return isbn;
     }
 
+
     public Integer getYear() {
         return year;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Book book = (Book) obj;
+        return title.equals(book.title) && author.equals(book.author) && isbn.equals(book.isbn) && year.equals(book.year);
     }
 
     @Override
@@ -43,5 +62,23 @@ public class Book {
                 ", year=" + year +
                 '}';
     }
+
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
+    }
+
+    public void setIsbn(Long isbn) {
+        this.isbn = isbn;
+    }
+
 
 }
