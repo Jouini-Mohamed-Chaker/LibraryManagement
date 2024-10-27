@@ -1,8 +1,7 @@
 package io.chaker.bibspring.controllers;
 
-
 import io.chaker.bibspring.models.Borrow;
-import io.chaker.bibspring.repositories.BorrowingRepository;
+import io.chaker.bibspring.services.BorrowingService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,48 +9,39 @@ import java.util.List;
 @RestController
 public class BorrowingController {
 
-    public final BorrowingRepository borrowingRepository;
+    private final BorrowingService borrowingService;
 
-    public BorrowingController(BorrowingRepository borrowingRepository) {
-        this.borrowingRepository = borrowingRepository;
+    public BorrowingController(BorrowingService borrowingService) {
+        this.borrowingService = borrowingService;
     }
 
     @GetMapping("/api/borrowings")
     public List<Borrow> getAllBorrowings() {
-        return borrowingRepository.findAll();
+        return borrowingService.getAllBorrowings();
     }
 
     @GetMapping("/api/borrowings/{id}")
     public Borrow getBorrowing(@PathVariable Long id) {
-        return borrowingRepository.findById(id).orElse(null);
+        return borrowingService.getBorrowing(id);
     }
 
     @PostMapping("/api/borrowings")
-    public List<Borrow> addBorrowings(@RequestBody List<Borrow> students) {
-        return borrowingRepository.saveAll(students);
+    public void addBorrowing(@RequestBody Borrow borrow) {
+        borrowingService.addBorrowing(borrow);
     }
 
     @PutMapping("/api/borrowings/{id}")
-    public Borrow updateBorrowing(@PathVariable Long id, @RequestBody Borrow borrow) {
-        return borrowingRepository.findById(id)
-                .map( b -> {
-                    b.setStudentId(borrow.getStudentId());
-                    b.setBookId(borrow.getBookId());
-                    b.setBorrowDate(borrow.getBorrowDate());
-                    b.setReturnDate(borrow.getReturnDate());
-                    return borrowingRepository.save(b);
-                })
-
-                .orElse(null);
+    public void updateBorrowing(@PathVariable Long id, @RequestBody Borrow borrow) {
+        borrowingService.updateBorrowing(id, borrow);
     }
 
     @DeleteMapping("/api/borrowings/{id}")
     public void deleteBorrowing(@PathVariable Long id) {
-        borrowingRepository.deleteById(id);
+        borrowingService.deleteBorrowing(id);
     }
 
     @DeleteMapping("/api/borrowings")
     public void deleteAllBorrowings() {
-        borrowingRepository.deleteAll();
+        borrowingService.deleteAllBorrowings();
     }
 }

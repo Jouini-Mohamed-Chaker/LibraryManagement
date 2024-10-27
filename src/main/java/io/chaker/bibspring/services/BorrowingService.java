@@ -1,15 +1,14 @@
 package io.chaker.bibspring.services;
 
-
-
 import io.chaker.bibspring.models.Borrow;
 
 import java.util.List;
 
 public interface BorrowingService {
-    void addBorrowing();
-    void deleteBorrowing();
-    void updateBorrowing();
-    Borrow getBorrowing();
+    void addBorrowing(Borrow borrow);
+    void deleteBorrowing(Long id);
+    void updateBorrowing(Long id, Borrow borrow);
+    Borrow getBorrowing(Long id);
     List<Borrow> getAllBorrowings();
+    void deleteAllBorrowings();
 }
