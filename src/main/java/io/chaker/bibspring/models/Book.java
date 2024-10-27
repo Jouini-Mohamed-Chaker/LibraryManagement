@@ -3,24 +3,23 @@ package io.chaker.bibspring.models;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import org.springframework.data.annotation.Id;
+import jakarta.persistence.Id;
 
 @Entity
 public class Book {
     private String title;
     private String author;
     private Integer year;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @jakarta.persistence.Id
-    private Long isbn;
+    private Long id;
 
-
-    public Book(String title, String author, Integer year, Long isbn) {
+    public Book(String title, String author, Integer year, Long id) {
         this.title = title;
         this.author = author;
         this.year = year;
-        this.isbn = isbn;
+        this.id = id;
     }
 
     public Book() {}
@@ -33,37 +32,17 @@ public class Book {
         return author;
     }
 
-    public void setId(Long isbn) {
-        this.isbn = isbn;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Long getId() {
-        return isbn;
+        return id;
     }
-
 
     public Integer getYear() {
         return year;
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        Book book = (Book) obj;
-        return title.equals(book.title) && author.equals(book.author) && isbn.equals(book.isbn) && year.equals(book.year);
-    }
-
-    @Override
-    public String toString() {
-        return "Book{" +
-                "title='" + title + '\'' +
-                ", author='" + author + '\'' +
-                ", isbn='" + isbn + '\'' +
-                ", year=" + year +
-                '}';
-    }
-
 
     public void setTitle(String title) {
         this.title = title;
@@ -77,9 +56,21 @@ public class Book {
         this.year = year;
     }
 
-    public void setIsbn(Long isbn) {
-        this.isbn = isbn;
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Book book = (Book) obj;
+        return title.equals(book.title) && author.equals(book.author) && id.equals(book.id) && year.equals(book.year);
     }
 
-
+    @Override
+    public String toString() {
+        return "Book{" +
+                "title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", id=" + id +
+                ", year=" + year +
+                '}';
+    }
 }

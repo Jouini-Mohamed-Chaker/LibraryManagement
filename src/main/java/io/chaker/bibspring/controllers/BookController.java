@@ -21,9 +21,9 @@ public class BookController {
         return repository.findAll();
     }
 
-    @GetMapping("/api/books/{isbn}")
-    public Book getBook(@PathVariable Long isbn) {
-        return repository.findById(isbn).orElse(null);
+    @GetMapping("/api/books/{id}")
+    public Book getBook(@PathVariable Long id) {
+        return repository.findById(id).orElse(null);
     }
 
     @PostMapping("/api/books")
@@ -31,9 +31,9 @@ public class BookController {
         return repository.saveAll(books);
     }
 
-    @PutMapping("/api/books/{isbn}")
-    public Book updateBook(@PathVariable Long isbn,@RequestBody Book book) {
-        return repository.findById(isbn)
+    @PutMapping("/api/books/{id}")
+    public Book updateBook(@PathVariable Long id,@RequestBody Book book) {
+        return repository.findById(id)
                 .map(b -> {
                     b.setTitle(book.getTitle());
                     b.setAuthor(book.getAuthor());
@@ -43,9 +43,14 @@ public class BookController {
                 .orElse(null);
     }
 
-    @DeleteMapping("/api/books/{isbn}")
-    public void deleteBook(@PathVariable Long isbn) {
-        repository.deleteById(isbn);
+    @DeleteMapping("/api/books/{id}")
+    public void deleteBook(@PathVariable Long id) {
+        repository.deleteById(id);
+    }
+
+    @DeleteMapping("/api/books")
+    public void deleteAllBooks() {
+        repository.deleteAll();
     }
 
 
