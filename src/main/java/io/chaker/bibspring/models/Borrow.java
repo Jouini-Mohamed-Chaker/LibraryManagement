@@ -12,11 +12,7 @@ public class Borrow {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    @Column(name = "student_id", nullable = false)
     private Long studentId;
-    @NotNull
-    @Column(name = "book_id", nullable = false)
     private Long bookId;
     private LocalDateTime borrowDate;
     private LocalDateTime returnDate;

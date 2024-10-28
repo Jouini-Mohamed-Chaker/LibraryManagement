@@ -1,7 +1,7 @@
 package io.chaker.bibspring.controllers;
 
 import io.chaker.bibspring.models.Borrow;
-import io.chaker.bibspring.services.BorrowingService;
+import io.chaker.bibspring.repositories.BorrowingRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -9,39 +9,47 @@ import java.util.List;
 @RestController
 public class BorrowingController {
 
-    private final BorrowingService borrowingService;
+    private final BorrowingRepository borrowingRepository;
 
-    public BorrowingController(BorrowingService borrowingService) {
-        this.borrowingService = borrowingService;
+    public BorrowingController(BorrowingRepository borrowingRepository) {
+        this.borrowingRepository = borrowingRepository;
     }
 
     @GetMapping("/api/borrowings")
     public List<Borrow> getAllBorrowings() {
-        return borrowingService.getAllBorrowings();
+        return borrowingRepository.findAll();
     }
 
     @GetMapping("/api/borrowings/{id}")
     public Borrow getBorrowing(@PathVariable Long id) {
-        return borrowingService.getBorrowing(id);
+        return borrowingRepository.findById(id).orElse(null);
     }
 
     @PostMapping("/api/borrowings")
-    public void addBorrowing(@RequestBody Borrow borrow) {
-        borrowingService.addBorrowing(borrow);
+    public List<Borrow> addBorrowings(@RequestBody List<Borrow> borrowings) {
+        return borrowingRepository.saveAll(borrowings);
     }
 
     @PutMapping("/api/borrowings/{id}")
-    public void updateBorrowing(@PathVariable Long id, @RequestBody Borrow borrow) {
-        borrowingService.updateBorrowing(id, borrow);
+    public Borrow updateBorrowing(@PathVariable Long id, @RequestBody Borrow borrow) {
+        return borrowingRepository.findById(id)
+                .map(b -> {
+                    b.setStudentId(borrow.getStudentId());
+                    b.setBookId(borrow.getBookId());
+                    b.setBorrowDate(borrow.getBorrowDate());
+                    b.setReturnDate(borrow.getReturnDate());
+                    return borrowingRepository.save(b);
+                })
+                .orElse(null);
     }
 
     @DeleteMapping("/api/borrowings/{id}")
     public void deleteBorrowing(@PathVariable Long id) {
-        borrowingService.deleteBorrowing(id);
+        borrowingRepository.deleteById(id);
     }
 
     @DeleteMapping("/api/borrowings")
     public void deleteAllBorrowings() {
-        borrowingService.deleteAllBorrowings();
+        borrowingRepository.deleteAll();
     }
 }
