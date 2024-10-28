@@ -25,9 +25,14 @@ public class StudentController {
         return studentRepository.findById(id).orElse(null);
     }
 
-    @PostMapping("/api/students")
+    @PostMapping("/api/students/addMany")
     public List<Student> addStudents(@RequestBody List<Student> students) {
         return studentRepository.saveAll(students);
+    }
+    
+    @PostMapping("/api/students/addOne")
+    public Student addStudents(@RequestBody Student student) {
+        return studentRepository.save(student);
     }
 
     @PutMapping("/api/students/{id}")

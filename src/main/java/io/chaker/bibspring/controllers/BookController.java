@@ -26,9 +26,14 @@ public class BookController {
         return bookRepository.findById(id).orElse(null);
     }
 
-    @PostMapping("/api/books")
+    @PostMapping("/api/books/addMany")
     public List<Book> addBooks(@RequestBody List<Book> books) {
         return bookRepository.saveAll(books);
+    }
+    
+    @PostMapping("/api/books/addOne")
+    public Book addBooks(@RequestBody Book book) {
+        return bookRepository.save(book);
     }
 
     @PutMapping("/api/books/{id}")

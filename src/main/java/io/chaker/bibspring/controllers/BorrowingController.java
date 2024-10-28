@@ -25,9 +25,14 @@ public class BorrowingController {
         return borrowingRepository.findById(id).orElse(null);
     }
 
-    @PostMapping("/api/borrowings")
+    @PostMapping("/api/borrowings/addMany")
     public List<Borrow> addBorrowings(@RequestBody List<Borrow> borrowings) {
         return borrowingRepository.saveAll(borrowings);
+    }
+    
+    @PostMapping("/api/borrowings/addOne")
+    public Borrow addBorrowings(@RequestBody Borrow borrowing) {
+        return borrowingRepository.save(borrowing);
     }
 
     @PutMapping("/api/borrowings/{id}")
